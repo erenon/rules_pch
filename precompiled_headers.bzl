@@ -63,6 +63,13 @@ def _precompiled_headers_impl(ctx):
   output = ctx.actions.declare_file(main_file.basename + '.gch')
   args.add('-o', output.path)
 
+  # Unless -MD is specified while creating the precompiled file,
+  # the .d file of the user of the precompiled file will not
+  # show the precompiled file: therefore bazel will not rebuild
+  # the user if the pch file changes.
+  args.add('-MD')
+  args.add('-MF', "/dev/null")
+
   ctx.actions.run(
     inputs = inputs,
     outputs = [output],
@@ -74,15 +81,15 @@ def _precompiled_headers_impl(ctx):
 
   # create a CcInfo output that cc_binary rules can depend on
   compilation_context = cc_common.create_compilation_context(
-    headers = depset(direct=[output]),
+    headers = depset(direct=[output, main_file]),
     includes = depset(direct=[output.dirname]),
   )
   main_cc_info = CcInfo(compilation_context = compilation_context, linking_context = None)
   cc_info = cc_common.merge_cc_infos(
-      # since bazel 3.2
-      #direct_cc_infos = [main_cc_info],
-      #cc_infos = [dep[CcInfo] for dep in ctx.attr.deps if CcInfo in dep],
-      cc_infos = [main_cc_info] + [dep[CcInfo] for dep in ctx.attr.deps if CcInfo in dep]
+      direct_cc_infos = [main_cc_info],
+      cc_infos = [dep[CcInfo] for dep in ctx.attr.deps if CcInfo in dep],
+      # before bazel 3.2:
+      #cc_infos = [main_cc_info] + [dep[CcInfo] for dep in ctx.attr.deps if CcInfo in dep]
   )
 
   return [ cc_info ]

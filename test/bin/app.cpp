@@ -1,10 +1,14 @@
+//#include <Common.hpp>
 #include "Common.hpp"
+
+
+#include "helper.hpp"
 
 #include <iostream>
 
 int main()
 {
-  f(1,2);
+  std::cout << f(1,2) << "\n";
 
   std::cout << libA() << "\n";
   std::cout << libB() << "\n";

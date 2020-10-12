@@ -5,4 +5,4 @@
 #include "sublib/Foo.hpp"
 #include "sublib/Bar.hpp"
 
-inline int f(int, int) { return 0; }
+inline int f(int, int) { return 9; }

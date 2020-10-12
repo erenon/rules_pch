@@ -17,14 +17,20 @@ Requires GCC and Bazel 3.1. Clang support needs slight modification.
           deps = [":libA", ":libB"],
         )
 
- - Depend on the created target:
+ - Depend on the created target, `copts` must include `-fpch-deps`:
 
         cc_binary(
           name = "app",
-          copts = ["-Winvalid-pch", "-Werror"], # for testing
+          copts = ["-Winvalid-pch", "-Werror", "-fpch-deps"],
           srcs = ["app.cpp"],
           deps = [":pch"],
         )
+
+If `-pch-deps` is not specified, bazel will not rebuild `app` if `pch` changes.
+This is a GCC bug, see:
+
+  - https://gcc.gnu.org/bugzilla/show_bug.cgi?id=14933
+  - https://bugs.openjdk.java.net/browse/JDK-7175914
 
 ## Test
 

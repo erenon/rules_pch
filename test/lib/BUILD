@@ -17,19 +17,6 @@ cc_library(
 precompiled_headers(
   name = "pch",
   main = "Common.hpp",
-  deps = [":LibA", "//test/sublib"],
-)
-
-cc_library(
-  name = "lib",
-  copts = ["-Winvalid-pch", "-Werror"],
-  srcs = ["lib.cpp"],
-  deps = [":pch"],
-)
-
-cc_binary(
-  name = "app",
-  copts = ["-Winvalid-pch", "-Werror"],
-  srcs = ["app.cpp"],
-  deps = [":pch"],
+  deps = [":LibA", "//test/lib/sublib"],
+  visibility = ["//visibility:public"],
 )
