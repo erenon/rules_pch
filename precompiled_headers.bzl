@@ -53,7 +53,7 @@ def _precompiled_headers_impl(ctx):
 
     args.add_all(compilation_context.system_includes.to_list(), before_each = '-isystem')
 
-  inputs = depset(direct=[main_file], transitive=headers)
+  inputs = depset(direct=[main_file], transitive=headers+[cc_toolchain.all_files])
 
   # force compilation of header
   args.add('-xc++-header')
