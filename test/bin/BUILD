@@ -1,6 +1,6 @@
 cc_library(
   name = "lib",
-  copts = ["-Winvalid-pch", "-Werror", "-fpch-deps"],
+  copts = ["-Winvalid-pch", "-Werror", "-fpch-deps", "-fno-exceptions"],
   srcs = ["lib.cpp"],
   deps = ["//test/lib:pch"],
 )
