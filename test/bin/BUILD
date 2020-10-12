@@ -7,7 +7,7 @@ cc_library(
 
 cc_binary(
   name = "app",
-  copts = ["-Winvalid-pch", "-Werror", "-fpch-deps"],
+  copts = ["-Winvalid-pch", "-Werror", "-fpch-deps", "-fno-exceptions"],
   srcs = ["app.cpp"],
   deps = ["//test/lib:pch"],
 )

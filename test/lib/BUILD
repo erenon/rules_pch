@@ -19,4 +19,5 @@ precompiled_headers(
   main = "Common.hpp",
   deps = [":LibA", "//test/lib/sublib"],
   visibility = ["//visibility:public"],
+  copts = ["-fno-exceptions"],
 )
