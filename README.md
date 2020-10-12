@@ -26,6 +26,10 @@ Requires GCC and Bazel 3.1. Clang support needs slight modification.
           deps = [":pch"],
         )
 
+## Test
+
+    $ bazel build test/...
+
 ## License
 
 Public domain.

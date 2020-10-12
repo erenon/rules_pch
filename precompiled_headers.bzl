@@ -55,11 +55,7 @@ def _precompiled_headers_impl(ctx):
 
   inputs = depset(direct=[main_file], transitive=headers)
 
-  # add args specified for this rule
-  args.add_all(ctx.attr.copts)
-  for define in ctx.attr.defines:
-    args.add('-D' + define)
-
+  # force compilation of header
   args.add('-xc++-header')
   args.add(main_file.path)
 
@@ -80,7 +76,6 @@ def _precompiled_headers_impl(ctx):
   compilation_context = cc_common.create_compilation_context(
     headers = depset(direct=[output]),
     includes = depset(direct=[output.dirname]),
-    defines = depset(direct=ctx.attr.defines),
   )
   main_cc_info = CcInfo(compilation_context = compilation_context, linking_context = None)
   cc_info = cc_common.merge_cc_infos(
@@ -97,8 +92,6 @@ precompiled_headers = rule(
   attrs = {
     "main": attr.label(allow_files=True, mandatory=True),
     "deps": attr.label_list(),
-    "copts": attr.string_list(),
-    "defines": attr.string_list(),
 
     "_cc_toolchain": attr.label(default = Label("@bazel_tools//tools/cpp:current_cc_toolchain")),
   },

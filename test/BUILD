@@ -7,7 +7,11 @@ cc_library(
     "LibB.hpp",
     "LibC.hpp",
   ],
-  defines = ['MY_FOO=bar'],
+  defines = [
+    'MY_FOO=bar',
+    'MY_STR=\\"foo\\"',
+    'MY_VAR=\\"$(BINDIR)\\"',
+  ],
 )
 
 precompiled_headers(

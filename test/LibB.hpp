@@ -1,1 +1,1 @@
-inline void libB() {}
+inline const char* libB() { return MY_VAR; }
